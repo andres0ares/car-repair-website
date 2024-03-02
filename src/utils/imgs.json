@@ -1,0 +1,26 @@
+[
+    {
+      "name": "Ferrari Testarossa",
+      "img": "/imgs/Ferrari_Testarossa.png"
+    },
+    {
+      "name": "Lamborghine Huracán",
+      "img": "/imgs/Lamborghini_Huracan.png"
+    },
+    {
+      "name": "Lamborghini Urus",
+      "img": "/imgs/Lamborghini_Urus.png"
+    },
+    {
+      "name": "Ferrari Testarossa",
+      "img": "/imgs/Ferrari_Testarossa.png"
+    },
+    {
+      "name": "Lamborghine Huracán",
+      "img": "/imgs/Lamborghini_Huracan.png"
+    },
+    {
+      "name": "Lamborghini Urus",
+      "img": "/imgs/Lamborghini_Urus.png"
+    }
+]
