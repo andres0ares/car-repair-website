@@ -6,7 +6,6 @@
       <p class="text-left text-h3 mt-8">{{ car?.nome }}</p>
       <p class="text-left">{{ car?.modelo }}</p>
       <p class="text-left mt-8">{{ car?.descricao }}</p>
-      <p class="mt-8">Objeto: {{ car }}</p>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="main-card-create-car">
     <v-row>
       <v-col md="4">
         <p class="text-left text-h6">Adicionar novo carro</p>
@@ -39,7 +39,64 @@
         <DisplayCar :car="car" />
       </v-col>
     </v-row>
-    <v-btn class="float-left" :color="'black'" @click="create">criar</v-btn>
+
+    <div class="mt-2" v-if="feedback.show">
+      <v-alert
+        v-if="feedback.err"
+        class="mb-4"
+        :variant="'tonal'"
+        :density="'compact'"
+        :type="'warning'"
+        :text="'Algo deu errado, tente noamente mais tarde.'"
+      ></v-alert>
+      <v-alert
+        v-else
+        class="mb-4"
+        :density="'compact'"
+        :variant="'tonal'"
+        :type="'success'"
+        :text="'Criado com sucesso!'"
+      ></v-alert>
+    </div>
+
+    <div class="mt-2">
+      <template v-if="props.edit">
+        <v-btn
+          :loading="loading"
+          :disabled="loading || feedback.show"
+          class="float-left"
+          :color="'black'"
+          @click="edit"
+          >salvar</v-btn
+        >
+        <v-btn
+          :loading="loading"
+          :disabled="loading || feedback.show"
+          class="float-left ml-4"
+          :color="'black'"
+          @click="_delete"
+          >Remover</v-btn
+        >
+      </template>
+
+      <v-btn
+        v-else
+        :loading="loading"
+        :disabled="loading || feedback.show"
+        class="float-left"
+        :color="'black'"
+        @click="create"
+        >Criar</v-btn
+      >
+      <v-btn
+        :disabled="loading || feedback.show"
+        class="float-left ml-4"
+        :color="'black'"
+        :variant="'text'"
+        @click.stop="emits('close')"
+        >cancelar</v-btn
+      >
+    </div>
   </v-container>
 </template>
 
@@ -47,24 +104,125 @@
 import MiniCarsSelect from "@/components/cars/MiniCarsSelect.vue";
 import DisplayCar from "@/components/cars/DisplayCar.vue";
 import imgs from "@/utils/imgs.json";
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
+import { getCars } from "@/api/cars";
+("@/api/cars.js");
 
 const car = ref({
+  id: undefined,
   img: undefined,
   nome: undefined,
   modelo: undefined,
   descricao: undefined,
 });
 
+const loading = ref(false);
+const feedback = ref({
+  show: false,
+  err: true,
+});
+
+const emits = defineEmits(["close"]);
+const props = defineProps({
+  edit: Object,
+});
+
+watch(
+  () => props.edit,
+  (newValue) => {
+    handleEdit();
+  }
+);
+
+onMounted(() => {
+  if (props.edit) handleEdit();
+});
+
+function handleEdit() {
+  car.value = props.edit;
+}
+
 function create() {
+  loading.value = true;
+
+  const server_uri = import.meta.env.VITE_SERVER_URI;
+
   axios
-    .post("http://localhost:8000/api/car", car.value)
+    .post(`${server_uri}/api/car`, car.value)
     .then((_e) => {
-      console.log(_e);
+      feedback.value.err = false;
+      getCars();
     })
     .catch((_) => {
       console.log(_);
+      feedback.value.err = true;
+    })
+    .finally(() => {
+      loading.value = false;
+      feedback.value.show = true;
+      setTimeout(() => {
+        feedback.value.show = false;
+        emits("close");
+      }, 4000);
+    });
+}
+
+function edit() {
+  loading.value = true;
+
+  const server_uri = import.meta.env.VITE_SERVER_URI;
+
+  axios
+    .put(`${server_uri}/api/car`, car.value)
+    .then((_e) => {
+      feedback.value.err = false;
+      getCars();
+    })
+    .catch((_) => {
+      console.log(_);
+      feedback.value.err = true;
+    })
+    .finally(() => {
+      loading.value = false;
+      feedback.value.show = true;
+      setTimeout(() => {
+        feedback.value.show = false;
+        emits("close");
+      }, 4000);
+    });
+}
+
+function _delete() {
+  loading.value = true;
+
+  const server_uri = import.meta.env.VITE_SERVER_URI;
+
+  axios
+    .delete(`${server_uri}/api/car/${car.value.id}`)
+    .then((_e) => {
+      feedback.value.err = false;
+      getCars();
+    })
+    .catch((_) => {
+      console.log(_);
+      feedback.value.err = true;
+    })
+    .finally(() => {
+      loading.value = false;
+      feedback.value.show = true;
+      setTimeout(() => {
+        feedback.value.show = false;
+        emits("close");
+      }, 4000);
     });
 }
 </script>
+
+<style>
+.main-card-create-car {
+  border: 1px solid #00000022;
+  border-radius: 6px;
+  display: grid;
+}
+</style>

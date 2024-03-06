@@ -8,18 +8,11 @@ export function getCars() {
 
     store.resetCars(); //reset store, all rmas are deleted
   
-    // const user_id = user.getClientId; //get user_id
-  
-    // const config = {
-    //   headers: { Authorization: `Bearer ${user.access_token}` }, //get acces_token
-    // };
-  
     //send request
     axios
       .get(`${server_uri}/api/cars`)
       .then((res) => {
         //save updated rmas
-        console.log(res.data)
         store.setCars(res.data.reverse(), 'ready');
       })
       .catch((err) => {

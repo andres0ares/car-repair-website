@@ -6,7 +6,7 @@
       :class="`mini-card ${clickedIdx == i ? 'clicked-mini' : ' '}`"
     >
       <v-img class="img-mini" contain :src="item?.img" />
-      <!-- <p>{{ props.select }}</p> -->
+      <p class="text-center text-caption mt-2 font-weight-bold">{{ item.nome }}</p>
     </div>
   </div>
 </template>

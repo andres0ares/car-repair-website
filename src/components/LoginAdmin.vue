@@ -11,6 +11,7 @@
         :type="show ? 'text' : 'password'"
         @click:append="show = !show"
       ></v-text-field>
+      <v-alert v-if="err" class="mb-4" :density="'compact'" :type="'warning'" :text="'Senha inválida!'"></v-alert>
       <v-btn @click="enter" color="black">entrar</v-btn>
     </div>
   </div>
@@ -24,10 +25,18 @@ import { ref } from "vue";
 const password = ref("");
 const show = ref(false);
 const user = useUserStore();
-function enter() {
+const err = ref(false);
 
+function handleError() {
+  err.value = true;
+  setTimeout(() => {
+    err.value = false;
+  }, 4000)
+}
+function enter() {
   const admin_key = import.meta.env.VITE_PASSWORD_ADMIN;
   if(password.value == admin_key) user.setIsAdmin(true);
+  else handleError();
 }
 </script>
 
