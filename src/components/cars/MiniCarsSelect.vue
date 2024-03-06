@@ -5,6 +5,7 @@
       @click.stop="handleClick(item, i)"
       :class="`mini-card ${clickedIdx == i ? 'clicked-mini' : ' '}`"
     >
+      <v-icon v-if="props.icon" class="float-right mt-n4 mr-n4" :size="'x-small'" :icon="props.icon"></v-icon>
       <v-img class="img-mini" contain :src="item?.img" />
       <p class="text-center text-caption mt-2 font-weight-bold">{{ item.nome }}</p>
     </div>
@@ -17,6 +18,7 @@ import { ref } from "vue";
 const props = defineProps({
   cars: Array,
   select: Boolean,
+  icon: String,
 });
 
 const emits = defineEmits(["selected"]);
@@ -34,7 +36,7 @@ function handleClick(item, i) {
 .main-mini-display {
   position: relative;
   display: flex;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .img-mini {

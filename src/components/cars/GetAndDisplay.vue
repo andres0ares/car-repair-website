@@ -5,6 +5,7 @@
       @selected="(e) => emits('selected', e)"
       :select="props.select"
       :cars="store.getCars.data"
+      :icon="props.icon"
     />
   </div>
 </template>
@@ -19,6 +20,7 @@ const store = useAppStore();
 
 const props = defineProps({
   select: Boolean,
+  icon: String,
   type: String, // 'mini'
 });
 

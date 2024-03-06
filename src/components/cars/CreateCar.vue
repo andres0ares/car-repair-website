@@ -1,5 +1,5 @@
 <template>
-  <v-container class="main-card-create-car">
+  <v-container class="main-card-create-car pb-16">
     <v-row>
       <v-col md="4">
         <p class="text-left text-h6">Adicionar novo carro</p>
@@ -10,6 +10,7 @@
           :cars="imgs"
           @selected="(e) => (car.img = e.img)"
         />
+        
 
         <v-text-field
           v-model="car.nome"
@@ -34,6 +35,8 @@
           label="Descrição"
           variant="outlined"
         ></v-text-field>
+
+        <p v-if="!validateCar" class="text-caption "> * Todos os campos devem ser preenchidos.</p>
       </v-col>
       <v-col md="8">
         <DisplayCar :car="car" />
@@ -57,6 +60,7 @@
         :type="'success'"
         :text="'Criado com sucesso!'"
       ></v-alert>
+
     </div>
 
     <div class="mt-2">
@@ -82,7 +86,7 @@
       <v-btn
         v-else
         :loading="loading"
-        :disabled="loading || feedback.show"
+        :disabled="!validateCar || loading || feedback.show"
         class="float-left"
         :color="'black'"
         @click="create"
@@ -104,7 +108,7 @@
 import MiniCarsSelect from "@/components/cars/MiniCarsSelect.vue";
 import DisplayCar from "@/components/cars/DisplayCar.vue";
 import imgs from "@/utils/imgs.json";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import axios from "axios";
 import { getCars } from "@/api/cars";
 ("@/api/cars.js");
@@ -130,14 +134,24 @@ const props = defineProps({
 
 watch(
   () => props.edit,
-  (newValue) => {
+  (_) => {
     handleEdit();
   }
 );
 
+
+
 onMounted(() => {
   if (props.edit) handleEdit();
 });
+
+const validateCar = computed(() => {
+  if(car.value.img == undefined || car.value.img == '') return false;
+  if(car.value.nome == undefined || car.value.nome == '') return false;
+  if(car.value.modelo == undefined || car.value.modelo == '') return false;
+  if(car.value.descricao == undefined || car.value.descricao == '') return false;
+  return true
+})
 
 function handleEdit() {
   car.value = props.edit;
@@ -223,6 +237,6 @@ function _delete() {
 .main-card-create-car {
   border: 1px solid #00000022;
   border-radius: 6px;
-  display: grid;
+  width: 100%;
 }
 </style>

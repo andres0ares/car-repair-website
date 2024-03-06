@@ -17,7 +17,7 @@
     
     <div class="mt-10 pt-10">
       <p class="text-body-2 font-weight-bold">Carros disponíveis:</p>
-      <GetAndDisplay type="mini" select @selected="handleEdit" />
+      <GetAndDisplay type="mini" select :icon="'mdi-pencil'" @selected="handleEdit" />
     </div>
 
     <v-expand-transition>
