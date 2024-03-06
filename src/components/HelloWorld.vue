@@ -10,20 +10,20 @@
         </v-carousel-item>
       </v-carousel>
 
-      <div class="mb-4 mt-n16">
-        <div class="text-body-2 font-weight-light mb-n1">Ofinina de Carros</div>
-        <h1 class="text-h2 font-weight-bold">Pelli Motto</h1>
-      </div>
       
 
-      <CreateCar />
+      <!-- <GetAndDisplay /> -->
+      
+      <!-- <CreateCar /> -->
+
+
       <p class="mt-8 mb-4">Carros que atendemos:</p>
 
       <MiniCarsSelect :cars="imgs" />
       <div class="py-14" />
 
 
-      <v-row class="d-flex align-center justify-center">
+      <!-- <v-row class="d-flex align-center justify-center">
         <v-col cols="auto">
           <v-btn
             href="https://next.vuetifyjs.com/components/all/"
@@ -79,7 +79,7 @@
             Community
           </v-btn>
         </v-col>
-      </v-row>
+      </v-row> -->
     </v-responsive>
   </v-container>
 </template>
@@ -88,7 +88,14 @@
   // import DisplayCars from "@/components/cars/DisplayCars.vue";
   import CreateCar from "@/components/cars/CreateCar.vue"
   import MiniCarsSelect from "./cars/MiniCarsSelect.vue";
+  import GetAndDisplay from "@/components/cars/GetAndDisplay.vue"
   import imgs from "@/utils/imgs.json"
+  import { getCars } from "@/api/cars"
+  import { onMounted } from "vue";
+ 
+  onMounted(() => {
+    getCars()
+  })
 </script>
 
 <style>

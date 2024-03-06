@@ -3,9 +3,9 @@
     <div class="my-16" />
     <v-img class="img-display-car" contain :src="car?.img" />
     <div class="info-display-car">
-      <p class="text-left text-h3 mt-8">{{ car?.name }}</p>
-      <p class="text-left">{{ car?.model }}</p>
-      <p class="text-left mt-8">{{ car?.description }}</p>
+      <p class="text-left text-h3 mt-8">{{ car?.nome }}</p>
+      <p class="text-left">{{ car?.modelo }}</p>
+      <p class="text-left mt-8">{{ car?.descricao }}</p>
       <p class="mt-8">Objeto: {{ car }}</p>
     </div>
   </div>
