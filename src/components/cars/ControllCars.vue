@@ -1,7 +1,7 @@
 <template>
   <v-container>
 
-    <p class="text-h4">Gerenciar Carros</p>
+    <p class="text-h5">Gerenciar Carros</p>
 
     <v-btn
       v-if="!create"

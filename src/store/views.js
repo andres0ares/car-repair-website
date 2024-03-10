@@ -1,20 +1,16 @@
 // Utilities
 import { defineStore } from 'pinia'
 
-export const useUserStore = defineStore('user', {
+export const useViewStore = defineStore('views', {
   state: () => ({
-    isAdmin: false,
-    client: {
-      logged: false,
-      info: [],
-    }
+    viewUserType: 'client',
   }),
   getters: {
-    _isAdmin: (state) => state.isAdmin,
+    //_isAdmin: (state) => state.isAdmin,
   },
   actions: {
-    setIsAdmin(value) {
-      this.isAdmin = value
+    setViewUserType(value) {
+      this.viewUserType = value // 'client', 'staff', 'admin'
     },
   },
   persist: {

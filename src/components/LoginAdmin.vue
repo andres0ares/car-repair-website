@@ -4,7 +4,7 @@
       <DisplayLogo />
       <p class="mt-4">Digite a senha:</p>
       <v-text-field
-        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+        :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         v-model="password"
         :variant="'outlined'"
         :density="'compact'"
