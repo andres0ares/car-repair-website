@@ -3,7 +3,7 @@
         <div v-if="user.client.logged">
             <p> {{ user.client.info?.nome }} </p>
         </div>
-        <LoginDefault v-else @close="() => login = false" />
+        <LoginDefault v-else client @close="() => login = false" />
     </div>
 </template>
 

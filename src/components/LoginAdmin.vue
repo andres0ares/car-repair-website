@@ -9,7 +9,7 @@
         :variant="'outlined'"
         :density="'compact'"
         :type="show ? 'text' : 'password'"
-        @click:append="show = !show"
+        @click:append-inner="show = !show"
       ></v-text-field>
       <v-alert v-if="err" class="mb-4" :density="'compact'" :type="'warning'" :text="'Senha inválida!'"></v-alert>
       <v-btn @click="enter" color="black">entrar</v-btn>

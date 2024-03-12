@@ -16,6 +16,10 @@ export const useUserStore = defineStore('user', {
     setIsAdmin(value) {
       this.isAdmin = value
     },
+    loginClient(value) {
+      this.client.logged = true;
+      this.client.info = value;
+    }
   },
   persist: {
     storage: sessionStorage, // data in sessionStorage is cleared when the page session ends.

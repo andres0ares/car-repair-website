@@ -14,31 +14,33 @@
         ></v-btn>
       </template>
 
-      <v-card>
+      <v-card v-if="createClient" class="main-login-admin">
+        <CreateClient @close="closeCreateClient" />
+      </v-card>
+      <v-card v-else>
         <div class="main-login-admin">
             <div class="mt-n16">
             <DisplayLogo />
             <p class="mt-4">Digite seu e-mail:</p>
             <v-text-field
-                v-model="email"
+                v-model="login.email"
                 :variant="'outlined'"
                 :density="'compact'"
             ></v-text-field>
             <p class="mt-n3">Digite a senha:</p>
             <v-text-field
                 :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                v-model="password"
+                v-model="login.password"
                 :variant="'outlined'"
                 :density="'compact'"
                 :type="show ? 'text' : 'password'"
-                @click:append="show = !show"
+                @click:append-inner="show = !show"
             ></v-text-field>
             <v-alert v-if="err" class="mb-4" :density="'compact'" :type="'warning'" :text="'Senha inválida!'"></v-alert>
-            <v-btn @click="enter" color="black">entrar</v-btn>
-            <v-btn @click.stop="dialog = false" color="grey" :variant="'text'">cancelar</v-btn>
+            <v-btn @click="enter" color="black" :loading="loading" :disabled="loading">entrar</v-btn>
+            <v-btn @click.stop="dialog = false" color="grey" :variant="'text'" :disabled="loading">cancelar</v-btn>
+            <p v-if="props.client" @click.stop="createClient = true" class="mt-7 cursor-pointer text-body-2">Não possui uma conta? <span class="font-weight-bold">cadastre-se aqui.</span></p>
             </div>
-
-
         </div>
       </v-card>
     </v-dialog>
@@ -47,17 +49,50 @@
 <script setup>
 import { ref } from 'vue';
 import DisplayLogo from "@/components/DisplayLogo.vue"
+import CreateClient from '../client/CreateClient.vue';
+import { loginClient } from "@/api/clients";
 //
 
-const emits = defineEmits(['close']) 
+
 const err = ref(false);
 const show = ref(false);
-const email = ref('');
-const password = ref('');
+const loading = ref(false);
+const login = ref({
+  email: undefined,
+  password: undefined,
+})
+
+const createClient = ref(false);
 const dialog = ref(false);
 
+const props = defineProps({
+  client: Boolean, 
+})
+
+const emits = defineEmits(['close']);
+
+
 function enter() {
-    console.log('hello world')
+    loading.value = true
+
+    if(props.client) {
+      loginClient(login.value).then(() => {
+        dialog.value = false
+      }).catch(() => {
+        err.value = true;
+        setTimeout(() => {
+          err.value = false
+        }, 3000)
+      })
+      .finally(() => {
+        loading.value = false
+      })
+    } 
+}
+
+function closeCreateClient() {
+  dialog.value = false;
+  createClient.value = false
 }
 
 
