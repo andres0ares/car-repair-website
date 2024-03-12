@@ -2,6 +2,7 @@
   <v-container class="main-card-create-car pb-16">
     <v-row>
       <v-col md="4">
+
         <p class="text-left text-h6">Adicionar novo carro</p>
         <p class="text-left text-body-2 mb-3">Selecione a imagem:</p>
 
@@ -110,7 +111,7 @@ import DisplayCar from "@/components/cars/DisplayCar.vue";
 import imgs from "@/utils/imgs.json";
 import { ref, onMounted, watch, computed } from "vue";
 import axios from "axios";
-import { getCars } from "@/api/cars";
+import { getCars, createCar, editCar, deleteCar } from "@/api/cars";
 ("@/api/cars.js");
 
 const car = ref({
@@ -160,35 +161,29 @@ function handleEdit() {
 function create() {
   loading.value = true;
 
-  const server_uri = import.meta.env.VITE_SERVER_URI;
-
-  axios
-    .post(`${server_uri}/api/car`, car.value)
-    .then((_e) => {
-      feedback.value.err = false;
-      getCars();
-    })
-    .catch((_) => {
-      console.log(_);
-      feedback.value.err = true;
-    })
-    .finally(() => {
-      loading.value = false;
-      feedback.value.show = true;
-      setTimeout(() => {
-        feedback.value.show = false;
-        emits("close");
-      }, 4000);
-    });
+  createCar(car.value)
+  .then((_e) => {
+    feedback.value.err = false;
+    getCars();
+  })
+  .catch((_) => {
+    console.log(_);
+    feedback.value.err = true;
+  })
+  .finally(() => {
+    loading.value = false;
+    feedback.value.show = true;
+    setTimeout(() => {
+      feedback.value.show = false;
+      emits("close");
+    }, 4000);
+  });
 }
 
 function edit() {
   loading.value = true;
 
-  const server_uri = import.meta.env.VITE_SERVER_URI;
-
-  axios
-    .put(`${server_uri}/api/car`, car.value)
+  editCar(car.value)
     .then((_e) => {
       feedback.value.err = false;
       getCars();
@@ -210,26 +205,23 @@ function edit() {
 function _delete() {
   loading.value = true;
 
-  const server_uri = import.meta.env.VITE_SERVER_URI;
-
-  axios
-    .delete(`${server_uri}/api/car/${car.value.id}`)
-    .then((_e) => {
-      feedback.value.err = false;
-      getCars();
-    })
-    .catch((_) => {
-      console.log(_);
-      feedback.value.err = true;
-    })
-    .finally(() => {
-      loading.value = false;
-      feedback.value.show = true;
-      setTimeout(() => {
-        feedback.value.show = false;
-        emits("close");
-      }, 4000);
-    });
+  deleteCar(car.value.id)
+  .then((_e) => {
+    feedback.value.err = false;
+    getCars();
+  })
+  .catch((_) => {
+    console.log(_);
+    feedback.value.err = true;
+  })
+  .finally(() => {
+    loading.value = false;
+    feedback.value.show = true;
+    setTimeout(() => {
+      feedback.value.show = false;
+      emits("close");
+    }, 4000);
+  });
 }
 </script>
 

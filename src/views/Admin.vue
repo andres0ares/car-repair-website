@@ -16,6 +16,9 @@
       <v-window-item :value="2">
         <ControllStaff />
       </v-window-item>
+      <v-window-item :value="3">
+        <ReportDefault />
+      </v-window-item>
     </v-window>
 
 
@@ -29,6 +32,7 @@ import ControllCars from "@/components/cars/ControllCars.vue";
 import ControllServico from "@/components/servicos/ControllServico.vue";
 import ControllStaff from "@/components/staff/ControllStaff.vue";
 import LoginAdmin from "@/components/LoginAdmin.vue";
+import ReportDefault from "@/components/reports/ReportDefault.vue";
 
 import { useUserStore } from "@/store/user";
 import { useViewStore } from "@/store/views";
@@ -48,6 +52,10 @@ const options = ref([
   {
     name: 'Gerenciar funcionários',
     id: 2,
+  },
+  {
+    name: 'Relatórios',
+    id: 3,
   }
 ]);
 

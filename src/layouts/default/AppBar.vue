@@ -1,6 +1,6 @@
 <template>
  <div class="main-nav-bar pa-5">
-  <p class="float-left">Pelli motto</p>
+  <p class="float-left">Peli motto</p>
   <div class="float-right">
     <DisplayUser />
   </div>
