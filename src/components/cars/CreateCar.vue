@@ -12,7 +12,6 @@
           @selected="(e) => (car.img = e.img)"
         />
         
-
         <v-text-field
           v-model="car.nome"
           class="mt-4"
@@ -59,7 +58,7 @@
         :density="'compact'"
         :variant="'tonal'"
         :type="'success'"
-        :text="'Criado com sucesso!'"
+        :text="'Alteração realizada com sucesso!'"
       ></v-alert>
 
     </div>
@@ -155,7 +154,7 @@ const validateCar = computed(() => {
 })
 
 function handleEdit() {
-  car.value = props.edit;
+  car.value = JSON.parse(JSON.stringify(props.edit));
 }
 
 function create() {

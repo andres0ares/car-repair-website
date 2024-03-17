@@ -3,10 +3,10 @@
     <div class="my-16"></div>
 
     <v-container>
-      <v-btn v-for="item in options" class="mr-2 text-none" @click.stop="option = item" :variant="option.id == item.id ? 'tonal' : 'outlined'" :color=" option.id == item.id ? 'black' : 'grey'" rounded :density="'compact'">{{ item.name }}</v-btn>
-    </v-container>
+      <v-btn v-for="item in options" class="mr-2 text-none mb-4" @click.stop="option = item" :variant="option.id == item.id ? 'tonal' : 'outlined'" :color=" option.id == item.id ? 'black' : 'grey'" rounded :density="'compact'">{{ item.name }}</v-btn>
+    </v-container> 
 
-    <v-window v-model="option.id">
+    <v-window v-model="option.id" :touch="false">
       <v-window-item :value="0">
         <ControllCars />
       </v-window-item>
@@ -20,7 +20,6 @@
         <ReportDefault />
       </v-window-item>
     </v-window>
-
 
     
   </div>

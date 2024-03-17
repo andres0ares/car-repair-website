@@ -14,7 +14,7 @@
       >{{ item }}</v-btn
     >
 
-    <v-window v-model="option">
+    <v-window v-model="option" :touch="false">
       <v-window-item :value="0">
         <div class="pt-10">
           <p class="text-body-2 font-weight-bold">Carros disponíveis:</p>
