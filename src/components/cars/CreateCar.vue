@@ -3,7 +3,7 @@
     <v-row>
       <v-col md="4">
 
-        <p class="text-left text-h6">Adicionar novo carro</p>
+        <p class="text-left text-h6">{{props.edit ? 'Editar' : 'Adicionar novo'}} carro</p>
         <p class="text-left text-body-2 mb-3">Selecione a imagem:</p>
 
         <MiniCarsSelect
