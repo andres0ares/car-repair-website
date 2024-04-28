@@ -60,7 +60,6 @@
         :type="'success'"
         :text="'Alteração realizada com sucesso!'"
       ></v-alert>
-
     </div>
 
     <div class="mt-2">

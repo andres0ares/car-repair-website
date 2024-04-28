@@ -7,9 +7,14 @@ export const useAppStore = defineStore('app', {
       data: {},
       status: "none", // 'none', waiting', 'ready', 'error'
     },
+    pagamentos: {
+      data: {},
+      status: "none", // 'none', waiting', 'ready', 'error'
+    },
   }),
   getters: {
     getCars: (state) => state.cars,
+    getPagamentos: (state) => state.pagamentos,
   },
   actions: {
     setCars(data, status) {
@@ -17,6 +22,15 @@ export const useAppStore = defineStore('app', {
     },
     resetCars() {
       this.cars = {
+        data: [],
+        status: "waiting",
+      };
+    },
+    setPagamentos(data, status) {
+      this.pagamentos = { data, status }
+    },
+    resetPagamentos() {
+      this.pagamentos = {
         data: [],
         status: "waiting",
       };

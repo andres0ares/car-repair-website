@@ -13,10 +13,17 @@
 
       <DisplayLogo class="mt-n10" />
 
+      <p class="mt-8 mb-4">Nossos serviços:</p>
+
+      <MiniCarsSelect :cars="servicos" />
+
       <p class="mt-8 mb-4">Carros que atendemos:</p>
 
-      <MiniCarsSelect :cars="imgs" />
+      <MiniCarsSelect :cars="imgs" />      
+      
       <div class="py-14" />
+
+      <v-btn @click="openCreateAppointment">Marcar serviço</v-btn>
 
 
     </v-responsive>
@@ -24,17 +31,34 @@
 </template>
 
 <script setup>
-  // import DisplayCars from "@/components/cars/DisplayCars.vue";
+
   import MiniCarsSelect from "./cars/MiniCarsSelect.vue";
   import DisplayLogo from "./DisplayLogo.vue";
-  //import GetAndDisplay from "@/components/cars/GetAndDisplay.vue"
   import imgs from "@/utils/imgs.json"
-  //import { getCars } from "@/api/cars"
-  //import { onMounted } from "vue";
- 
-  // onMounted(() => {
-  //   getCars()
-  // })
+  import { onMounted,  ref } from "vue";
+  import { getAll } from "@/api/servico"
+  import { useRouter } from "vue-router";
+
+  const servicos = ref([]);
+  const router = useRouter();
+
+  function getServicos() {
+    getAll().then((_) => {
+      servicos.value = _;
+    })
+    .catch((_) => {
+      console.log(_)
+    })
+  };
+
+  function openCreateAppointment() {
+    router.push('/agendar')
+  };
+
+  onMounted(() => {
+    if(servicos.value.length == 0) getServicos();
+  });
+
 </script>
 
 <style>

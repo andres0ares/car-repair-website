@@ -19,6 +19,11 @@ const routes = [
         name: 'admin',
         component: () => import(/* webpackChunkName: "home" */ '@/views/Admin.vue'),
       },
+      {
+        path: '/agendar',
+        name: 'agendar',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/CreateAppointment.vue'),
+      }
     ],
   },
 ]

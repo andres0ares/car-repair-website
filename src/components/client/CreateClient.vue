@@ -7,13 +7,19 @@
             :variant="'outlined'"
             :density="'compact'"
         ></v-text-field>
-        <p class="mt-n3">Digite seu e-mail:</p>
+        <p class="mt-n3">Sua cidade:</p>
+        <v-text-field
+            v-model="client.cidade"
+            :variant="'outlined'"
+            :density="'compact'"
+        ></v-text-field>
+        <p class="mt-n3">E-mail:</p>
         <v-text-field
             v-model="client.email"
             :variant="'outlined'"
             :density="'compact'"
         ></v-text-field>
-        <p class="mt-n3">Digite a senha:</p>
+        <p class="mt-n3">Senha:</p>
         <v-text-field
             :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="client.senha"
@@ -22,6 +28,17 @@
             :type="showPassword ? 'text' : 'password'"
             @click:append-inner="showPassword = !showPassword"
         ></v-text-field>
+        <v-checkbox
+            class="m-0"
+            v-model="client.assiste_one_piece"
+            :label="`Assiste One Piece?`"
+        ></v-checkbox>
+        <v-checkbox
+            class="mt-n3 p-n3"
+            v-model="client.e_flamengo"
+            :label="`É flamenguista?`"
+        ></v-checkbox>
+
         <p v-if="!validate" class="mb-2">*verifique os dados</p>
         <v-alert v-if="error" border="start" :variant="'tonal'" :type="'error'" class="text-caption my-4 max-w" :text="'ALgo deu errado, tente novamente mais tarde.'"></v-alert>
         <v-btn @click.stop="create" :color="'black'" :loading="loading" :disabled="!validate || loading || error">Criar</v-btn>
@@ -44,6 +61,9 @@ const client = ref({
     nome: undefined,
     email: undefined,
     senha: undefined,
+    cidade: undefined,
+    e_flamengo: false,
+    assiste_one_piece: false,
 })
 
 const msg = ref('Aviso: Este sistema é apenas para fins educacionais e de aprendizado. As senhas e e-mails fornecidos durante o cadastro não são criptografados no banco de dados. Recomendamos usar dados fictícios para garantir a segurança das informações pessoais.')
@@ -53,6 +73,7 @@ const validate = computed(() => {
     if(client.value.email == undefined || client.value.email.length < 3) return false
     if(client.value.senha == undefined || client.value.senha.length < 3) return false
     if(client.value.nome == undefined || client.value.nome.length < 3) return false
+    if(client.value.cidade == undefined || client.value.cidade.length < 3) return false
     return true
 })
 

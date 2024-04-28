@@ -3,7 +3,7 @@
       <v-row>
         <v-col md="4">
   
-          <p class="text-left text-h6">Adicionar novo servico</p>
+          <p class="text-left text-h6">Adicionar novo serviço</p>
   
           <v-text-field
             v-model="obj.img"
@@ -17,16 +17,17 @@
             v-model="obj.nome"
             class="mt-4"
             density="compact"
-            label="Nome do carro"
+            label="Nome"
             variant="outlined"
           ></v-text-field>
   
           <v-text-field
-            v-model="obj.modelo"
+            v-model="obj.preco"
             class="mt-4"
             density="compact"
-            label="Modelo"
+            label="Valor"
             variant="outlined"
+            :type="'number'"
           ></v-text-field>
   
           <v-text-field
@@ -74,14 +75,14 @@
             @click="edit"
             >salvar</v-btn
           >
-          <v-btn
+          <!-- <v-btn
             :loading="loading"
             :disabled="loading || feedback.show"
             class="float-left ml-4"
             :color="'black'"
             @click="_delete"
             >Remover</v-btn
-          >
+          > -->
         </template>
   
         <v-btn
@@ -108,14 +109,13 @@
   <script setup>
   import DisplayCar from "@/components/cars/DisplayCar.vue";
   import { ref, onMounted, watch, computed } from "vue";
-  import { getAll, create as createS, edit as editS, del } from "@/api/servico";
-  ("@/api/cars.js");
+  import { create as createS, edit as editS, del } from "@/api/servico";
   
   const obj = ref({
     id: undefined,
     img: undefined,
     nome: undefined,
-    modelo: undefined,
+    preco: undefined,
     descricao: undefined,
   });
   
@@ -125,7 +125,7 @@
     err: true,
   });
   
-  const emits = defineEmits(["close"]);
+  const emits = defineEmits(["close", "update"]);
   const props = defineProps({
     edit: Object,
   });
@@ -144,7 +144,7 @@
   const validate = computed(() => {
     if(obj.value.img == undefined || obj.value.img == '') return false;
     if(obj.value.nome == undefined || obj.value.nome == '') return false;
-    if(obj.value.modelo == undefined || obj.value.modelo == '') return false;
+    if(obj.value.preco == undefined ||  obj.value.preco <= 0) return false;
     if(obj.value.descricao == undefined || obj.value.descricao == '') return false;
     return true
   })
@@ -159,7 +159,7 @@
     createS(obj.value)
     .then((_e) => {
       feedback.value.err = false;
-      getCars();
+      emits("update");
     })
     .catch((_) => {
       console.log(_);
@@ -181,7 +181,7 @@
     editS(obj.value)
       .then((_e) => {
         feedback.value.err = false;
-        getCars();
+        emits("update");
       })
       .catch((_) => {
         console.log(_);
@@ -203,7 +203,7 @@
     del(car.value.id)
     .then((_e) => {
       feedback.value.err = false;
-      getCars();
+      emits("update");
     })
     .catch((_) => {
       console.log(_);
