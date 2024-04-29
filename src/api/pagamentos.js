@@ -1,5 +1,6 @@
 import { useAppStore } from "@/store/app";
 import axios from "axios";
+import { getAllDefault, createDeafult, editDefault } from "./default";
 
 export function getPagamentos() {
   const store = useAppStore(); //get store
@@ -21,4 +22,8 @@ export function getPagamentos() {
       //if error, update status to 'error'
       store.setPagamentos([], 'error');
     });
+}
+
+export function aprovePagamento(body) {
+  return editDefault(body, '/api/pagamento/aprove')
 }

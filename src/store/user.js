@@ -7,6 +7,10 @@ export const useUserStore = defineStore('user', {
     client: {
       logged: false,
       info: [],
+    },
+    staff: {
+      logged: false,
+      info: [],
     }
   }),
   getters: {
@@ -19,6 +23,10 @@ export const useUserStore = defineStore('user', {
     loginClient(value) {
       this.client.logged = true;
       this.client.info = value;
+    },
+    loginStaff(value) {
+      this.staff.logged = true;
+      this.staff.info = value;
     }
   },
   persist: {

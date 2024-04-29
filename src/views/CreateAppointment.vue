@@ -1,7 +1,7 @@
 <template>
 
     <v-expand-transition>
-        <Appointment v-if="appt.length == 0 || showAdd" :services="servicos" :cars="cars" @add="addNewAppointment" @close="showAdd = false" :cancel="appt.length > 0" />
+        <Appointment v-if="appt.length == 0 || showAdd" :services="servicos" :cars="cars" @add="addNewAppointment" :days="dias_disponiveis" @close="showAdd = false" :cancel="appt.length > 0" />
     </v-expand-transition>
 
     <div v-if="appt.length > 0">
@@ -41,16 +41,19 @@ import LoginDefault from "@/components/login/LoginDefault.vue";
 import { getAll } from "@/api/servico";
 import { getCars } from "@/api/cars";
 import { getPagamentos } from "@/api/pagamentos";
-import { create } from "@/api/contrato";
+import { create, getAllAtendimentos } from "@/api/contrato";
 import { onMounted, ref, computed } from "vue";
 import { useAppStore } from "@/store/app";
 import { useUserStore } from "@/store/user";
+import { useViewStore } from "@/store/views";
 
 const servicos = ref([]);
 const store = useAppStore();
 const showAdd = ref(true);
 const user = useUserStore();
 const login = ref(false);
+const view = useViewStore();
+const dias_disponiveis = ref([]);
 
 const appt = ref([]);
 const forma_pagamento = ref(undefined);
@@ -73,7 +76,16 @@ function getServicos() {
     })
 };
 
+function getAppt() {
+    getAllAtendimentos()
+    .then((_) => {
+        console.log(_)
+        dias_disponiveis.value = _
+    })
+}
+
 function addNewAppointment(_appt) {
+    dias_disponiveis.value.filter((_) => new Date(_.dia).toLocaleDateString('pt') == new Date(_appt.agendamento).toLocaleDateString('pt'))[0].qtd--;
     appt.value.push(_appt);
     showAdd.value = false;
 }
@@ -98,6 +110,9 @@ function finish() {
 
 
 onMounted(() => {
+ view.setViewUserType('client')
+ view.setViewPage('create')
+ getAppt();
  if(servicos.value.length == 0) getServicos();
  if (["none", "error"].includes(store.getCars?.status)) getCars();
  if (["none", "error"].includes(store.getPagamentos?.status)) getPagamentos();

@@ -5,6 +5,12 @@
         </div>
         <LoginDefault v-else client @close="() => login = false" />
     </div>
+    <div v-if="view.viewUserType == 'staff'">
+        <div v-if="user.staff.logged">
+            <p> {{ user.staff.info?.nome }} </p>
+        </div>
+        <LoginDefault v-else client @close="() => login = false" />
+    </div>
 </template>
 
 <script setup>

@@ -29,8 +29,9 @@
 
         <v-date-picker
             v-model="obj.agendamento"
-            max="2024-05-26"
-            min="2024-04-26"
+            :allowed-dates="allow"
+            :max="max_day"
+            :min="new Date()"
         ></v-date-picker>
 
         <p v-if="!validateCar" class="text-caption mb-3">* Preencha todos campos.</p>
@@ -64,9 +65,17 @@ const props = defineProps({
     cars: Array,
     services: Array,
     cancel: Boolean,
+    days: Array,
 });
 
 const emits = defineEmits(['add', 'close']);
+
+function allow(e) {
+    return props.days.filter((_) => new Date(_.dia).toLocaleDateString() == new Date(e).toLocaleDateString())[0]?.qtd > 0 ?? false
+}
+
+var dataAtual = new Date();
+const max_day = ref(new Date(dataAtual.setDate(dataAtual.getDate() + 30))) 
 
 const defaultObj = {
     carro: undefined,

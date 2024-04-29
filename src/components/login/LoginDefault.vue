@@ -51,6 +51,7 @@ import { ref } from 'vue';
 import DisplayLogo from "@/components/DisplayLogo.vue"
 import CreateClient from '../client/CreateClient.vue';
 import { loginClient } from "@/api/clients";
+import { loginStaff } from '@/api/staff';
 //
 
 
@@ -66,7 +67,8 @@ const createClient = ref(false);
 const dialog = ref(false);
 
 const props = defineProps({
-  client: Boolean, 
+  client: Boolean,
+  staff: Boolean, 
 })
 
 const emits = defineEmits(['close']);
@@ -88,6 +90,20 @@ function enter() {
         loading.value = false
       })
     } 
+    else if(props.staff) {
+      loginStaff(login.value).then(() => {
+        emits('close');
+        dialog.value = false
+      }).catch(() => {
+        err.value = true;
+        setTimeout(() => {
+          err.value = false
+        }, 3000)
+      })
+      .finally(() => {
+        loading.value = false
+      })
+    }
 }
 
 function closeCreateClient() {
