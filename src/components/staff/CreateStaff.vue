@@ -103,7 +103,7 @@
   <script setup>
   import DisplayCar from "@/components/cars/DisplayCar.vue";
   import { ref, onMounted, watch, computed } from "vue";
-  import { create as createS, edit as editS, del } from "@/api/staff";
+  import { create as createS, edit as editS } from "@/api/staff";
   ("@/api/cars.js");
   
   const obj = ref({
@@ -193,25 +193,25 @@
   }
   
   function _delete() {
-    loading.value = true;
+    // loading.value = true;
   
-    del(car.value.id)
-    .then((_e) => {
-      feedback.value.err = false;
-      getCars();
-    })
-    .catch((_) => {
-      console.log(_);
-      feedback.value.err = true;
-    })
-    .finally(() => {
-      loading.value = false;
-      feedback.value.show = true;
-      setTimeout(() => {
-        feedback.value.show = false;
-        emits("close");
-      }, 4000);
-    });
+    // del(car.value.id)
+    // .then((_e) => {
+    //   feedback.value.err = false;
+    //   getCars();
+    // })
+    // .catch((_) => {
+    //   console.log(_);
+    //   feedback.value.err = true;
+    // })
+    // .finally(() => {
+    //   loading.value = false;
+    //   feedback.value.show = true;
+    //   setTimeout(() => {
+    //     feedback.value.show = false;
+    //     emits("close");
+    //   }, 4000);
+    // });
   }
   </script>
   

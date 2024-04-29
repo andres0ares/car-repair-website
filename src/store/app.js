@@ -4,17 +4,22 @@ import { defineStore } from 'pinia'
 export const useAppStore = defineStore('app', {
   state: () => ({
     cars: {
-      data: {},
+      data: [],
+      status: "none", // 'none', waiting', 'ready', 'error'
+    },
+    servicos: {
+      data: [],
       status: "none", // 'none', waiting', 'ready', 'error'
     },
     pagamentos: {
-      data: {},
+      data: [],
       status: "none", // 'none', waiting', 'ready', 'error'
     },
   }),
   getters: {
     getCars: (state) => state.cars,
     getPagamentos: (state) => state.pagamentos,
+    getServicos: (state) => state.servicos,
   },
   actions: {
     setCars(data, status) {
@@ -31,6 +36,15 @@ export const useAppStore = defineStore('app', {
     },
     resetPagamentos() {
       this.pagamentos = {
+        data: [],
+        status: "waiting",
+      };
+    },
+    setServicos(data, status) {
+      this.servicos = { data, status }
+    },
+    resetServicos() {
+      this.servicos = {
         data: [],
         status: "waiting",
       };

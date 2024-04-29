@@ -8,6 +8,7 @@
       <v-icon v-if="props.icon" class="float-right mt-n4 mr-n4" :size="'x-small'" :icon="props.icon"></v-icon>
       <v-img class="img-mini" contain :src="item?.img" />
       <p class="text-center text-caption mt-2 font-weight-bold">{{ item.nome }}</p>
+      <p v-if="item?.preco" class="text-caption mt-2">{{ `valor: R$ ${item?.preco}` ?? '' }}</p>
     </div>
   </div>
 </template>

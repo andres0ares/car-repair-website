@@ -1,12 +1,13 @@
 <template>
  <div class="main-nav-bar pa-5">
-  <p class="float-left">Peli motto</p>
+
+  <p @click="goHome" class="float-left cursor-pointer">Peli motto</p>
   
   <div class="float-right">
     <DisplayUser />
   </div>
   <div v-if="user.client.logged && view.viewPage != 'client-page' && view.viewUserType == 'client' " class="float-right">
-    <v-btn @click="openClientePage" class="mr-4" append-icon="mdi-car" variant="outlined" rounded size="small">Meus atendimentos</v-btn>
+    <v-btn @click="openClientePage" class="mr-8" append-icon="mdi-car" variant="outlined" rounded size="small">Meus atendimentos</v-btn>
   </div>
  </div>
 </template>
@@ -24,6 +25,10 @@
 
   function openClientePage() {
     router.push('/meus-atendimentos')
+  };
+
+  function goHome() {
+    router.push('/')
   };
 
 

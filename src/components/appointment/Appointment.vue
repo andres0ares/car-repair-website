@@ -1,5 +1,5 @@
 <template>
-    <div class="main-card-appoint-create">
+    <div class="main-card-appoint-create my-10">
 
         <p class="text-left text-body-2 my-3">Selecione o serviço:</p>
 

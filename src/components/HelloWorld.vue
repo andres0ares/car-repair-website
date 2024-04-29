@@ -19,11 +19,17 @@
 
       <p class="mt-8 mb-4">Carros que atendemos:</p>
 
-      <MiniCarsSelect :cars="imgs" />      
+      <MiniCarsSelect :cars="cars" />  
+
+      <v-btn class="mt-16" color="black" @click="openCreateAppointment">Marcar atendimento</v-btn>    
+
+      <!-- <v-container>
+        <div class="tt">
+          <v-btn @click="openCreateAppointment">Marcar serviço</v-btn>
+        </div>
+      </v-container>   -->
       
       <div class="py-14" />
-
-      <v-btn @click="openCreateAppointment">Marcar serviço</v-btn>
 
 
     </v-responsive>
@@ -35,28 +41,37 @@
   import MiniCarsSelect from "./cars/MiniCarsSelect.vue";
   import DisplayLogo from "./DisplayLogo.vue";
   import imgs from "@/utils/imgs.json"
-  import { onMounted,  ref } from "vue";
-  import { getAll } from "@/api/servico"
+  import { onMounted,  ref, computed } from "vue";
   import { useRouter } from "vue-router";
+  import { useAppStore } from "@/store/app";
 
-  const servicos = ref([]);
+  //const servicos = ref([]);
   const router = useRouter();
+  const store = useAppStore();
 
-  function getServicos() {
-    getAll().then((_) => {
-      servicos.value = _;
-    })
-    .catch((_) => {
-      console.log(_)
-    })
-  };
+  const servicos = computed(() => {
+    return store.servicos?.data ?? []
+  });
+
+  const cars = computed(() => {
+    return store.cars?.data ?? []
+  })
+
+  // function getServicos() {
+  //   getAll().then((_) => {
+  //     servicos.value = _;
+  //   })
+  //   .catch((_) => {
+  //     console.log(_)
+  //   })
+  // };
 
   function openCreateAppointment() {
     router.push('/agendar')
   };
 
   onMounted(() => {
-    if(servicos.value.length == 0) getServicos();
+    //if(servicos.value.length == 0) getServicos();
   });
 
 </script>
@@ -69,6 +84,10 @@
 
 .max-width {
   max-width: 1920px;
+  margin: 0 auto;
+}
+
+.tt {
   margin: 0 auto;
 }
 </style>
